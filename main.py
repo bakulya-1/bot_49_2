@@ -2,6 +2,7 @@ from aiogram import Bot, Dispatcher, executor, types
 from decouple import config
 import logging
 import os
+import re
 
 
 token = config('TOKEN')
@@ -40,7 +41,15 @@ async def cat_handler(message: types.Message):
 
 @dp.message_handler()
 async  def echo_handler(message: types.Message):
-    await message.answer(message.text)
+    text = message.text
+
+    if re.match(r'^-?\d+(\.\d+)?$', text):
+        number = float(text)
+        squared = number ** 2
+        await message.answer(f'Число в квадрате {squared}')
+    else:
+        await message.answer(text)
+
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
