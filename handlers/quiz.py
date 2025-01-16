@@ -243,8 +243,8 @@ async def game_choice(message: types.Message):
             return
 
         game_state[chat_id]["status"] = "game_in_progress"
-    else:
-        await bot.send_message(chat_id, "Сначала начните новую игру командой /game.")
+#    else:
+#        await bot.send_message(chat_id, "Сначала начните новую игру командой /game.")
 
 
 async def start_dice_game(message: types.Message, dice: str):
@@ -313,7 +313,6 @@ def register_handlers(dp: Dispatcher):
 #def register_handlers(dp: Dispatcher):
     dp.register_message_handler(game_dice, commands=['game'])
     dp.register_message_handler(game_choice)
-
 
     dp.register_message_handler(start_game, commands=['game'])
     dp.register_message_handler(game_choice)
