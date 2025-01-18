@@ -177,8 +177,8 @@ async def submit1(message: types.Message, state: FSMContext):
             )
             await main_db.sql_insert_products_details(
                 productid,
-                data['category'],
-                data.get('infoproduct', 'Нет информации')
+                category=data['category'],
+                infoproduct=data.get('infoproduct', 'Нет информации')
             )
 
 
