@@ -2,8 +2,10 @@ from aiogram import types, Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.filters.state import State, StatesGroup
+from babel.plural import within_range_list
+
 import buttons
-#from db import main_db
+from db import main_db
 
 
 class FSM_reg(StatesGroup):
@@ -73,9 +75,9 @@ async def submit(message: types.Message, state: FSMContext):
                 photo=data['photo']
             )
 
-        await message.answer('Ваши данные в базе',  reply_markup=buttons.remove_keyboard)
+            await message.answer('Ваши данные в базе', reply_markup=buttons.remove_keyboard)
+
         await state.finish()
-        #Запись в базу
 
     elif message.text == 'нет':
         await message.answer('Хорошо, отменено!', reply_markup=buttons.remove_keyboard)
@@ -115,6 +117,9 @@ class FSM_store(StatesGroup):
     price = State()
     photo1 = State()
     submit1 = State()
+    productid = State()
+    infoproduct = State()
+
 
 async def start_fsm_store(message: types.Message):
     await FSM_store.name.set()
@@ -163,6 +168,20 @@ async def load_photo1(message: types.Message, state: FSMContext):
 async def submit1(message: types.Message, state: FSMContext):
     if message.text.lower() == 'да':
         async with state.proxy() as data:
+            productid = await main_db.store(
+                name=data['name'],
+                size = data['size'],
+                price = data['price'],
+                photo = data['photo1'],
+                category = data['category']
+            )
+            await main_db.sql_insert_products_details(
+                productid,
+                data['category'],
+                data.get('infoproduct', 'Нет информации')
+            )
+
+
             await message.answer(f'Товар добавлен в базу', reply_markup=buttons.remove_keyboard)
 
             await state.finish()
