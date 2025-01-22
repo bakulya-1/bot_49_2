@@ -49,6 +49,7 @@ INSERT_store_detail_query = """
     VALUES (?, ?, ?)
 """
 
+
 CREATE_TABLE_collections = """
     CREATE TABLE IF NOT EXISTS collections(
     id INTEGER PRIMARY KEY AUTOUINCREMENT,

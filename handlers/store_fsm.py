@@ -117,6 +117,7 @@ async def submit_load(message: types.Message, state: FSMContext):
     else:
         await message.answer('Выберите да или нет')
 
+
 """""
 async def cancel_fsm1(message: types.Message, state: FSMContext):
     current_state = await state.get_state()
@@ -125,6 +126,7 @@ async def cancel_fsm1(message: types.Message, state: FSMContext):
         await state.finish()
         await message.answer('Отменено!', reply_markup=buttons.remove_keyboard())
 """""
+
 
 def register_handlers_store(dp: Dispatcher):
     dp.register_message_handler(start_fsm_store, commands=['store'])
