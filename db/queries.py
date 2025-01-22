@@ -24,29 +24,42 @@ CREATE_TABLE_store ="""
     name_product TEXT,
     size TEXT,
     price REAL,
-    photo1 TEXT
+    photo TEXT,
+    product_id TEXT
     )
 """
 
 INSERT_store_query = """
-    INSERT INTO store (name_product, size, price, photo1, category)
+    INSERT INTO store (name_product, size, price, photo, product_id)
     VALUES (?, ?, ?, ?, ?)
 """
 
 
-CREATE_TABLE_products_details = """
-    CREATE TABLE IF NOT EXISTS products_details(
+CREATE_TABLE_store_detail = """
+    CREATE TABLE IF NOT EXISTS store_detail(
     id INTEGER PRIMARY KEY AUTOUINCREMENT,
-    productid INTEGER,
+    product_id TEXT,
     category TEXT,
-    infoproduct TEXT,
-    FOREIGN KEY (productid) REFERENCES store(id)
+    info_product TEXT
     )
 """
 
-INSERT_products_details_query = """
-    INSERT INTO productid_details (productid, category, infoproduct)
+INSERT_store_detail_query = """
+    INSERT INTO store_detail (product_id, category, infop_roduct)
     VALUES (?, ?, ?)
+"""
+
+CREATE_TABLE_collections = """
+    CREATE TABLE IF NOT EXISTS collections(
+    id INTEGER PRIMARY KEY AUTOUINCREMENT,
+    collection TEXT,
+    product_id TEXT
+    )
+"""
+
+INSERT_collections_query = """
+    INSERT INTO collections (collection, product_id)
+    VALUES (?, ?)
 """
 
 
