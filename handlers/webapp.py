@@ -35,7 +35,7 @@ async def inline_webapp(message: types.Message):
     await message.answer('Inline кнопки: ', reply_markup=keyboard)
 
 
+
 def register_handlers(dp: Dispatcher):
     dp.register_message_handler(reply_webapp, commands=['reply_webapp'])
-    dp.register_message_handler(reply_webapp, commands=['inline_webapp'])
-
+    dp.register_message_handler(inline_webapp, commands=['inline_webapp'])

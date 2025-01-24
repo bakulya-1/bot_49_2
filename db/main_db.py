@@ -13,8 +13,8 @@ async def create_db():
         print('База данных подключена.')
 
         #    cursor.execute(queries.CREATE_TABLE_registered)
-        cursor.execute(queries.CREATE_TABLE_store)
-        cursor.execute(queries.CREATE_TABLE_store_detail)
+    cursor.execute(queries.CREATE_TABLE_store)
+    cursor.execute(queries.CREATE_TABLE_store_detail)
 
 
 
@@ -47,6 +47,34 @@ async def sql_insert_collection(collection, product_id):
     ))
     db.commit()
 
+
+# CRUD- 1
+#==============================================================
+
+def get_db_connection():
+    conn = sqlite3.connect('db/store.sqlite3')
+    conn.row_factory = sqlite3.Row
+    return conn
+
+def fetch_all_products():
+    conn = get_db_connection()
+    products = conn.execute("""
+    SELECT * from store s
+    INNER JOIN store_detail  sd 
+    ON s.product_id = sd.product_id
+    """).fetchall()
+    conn.close()
+    return products
+
+
+def delete_product(product_id):
+    conn = get_db_connection()
+
+    conn.execute('DELETE FROM store WHERE product_id = ?', (product_id,))
+    conn.execute('DELETE FROM store_detail WHERE product_id = ?', (product_id,))
+
+    conn.commit()
+    conn.close()
 
 
 

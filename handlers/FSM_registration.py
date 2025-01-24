@@ -2,10 +2,9 @@ from aiogram import types, Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.filters.state import State, StatesGroup
-from babel.plural import within_range_list
-
 import buttons
 from db import main_db
+
 
 
 class FSM_reg(StatesGroup):
@@ -96,6 +95,7 @@ async def cancel_fsm(message: types.Message, state: FSMContext):
         await message.answer('Отменено!', reply_markup=buttons.remove_keyboard)
 
 
+
 def register_handlers_fsm_reg(dp: Dispatcher):
     dp.register_message_handler(cancel_fsm, Text(equals='отмена', ignore_case=True), state='*')
 
@@ -106,7 +106,6 @@ def register_handlers_fsm_reg(dp: Dispatcher):
     dp.register_message_handler(load_city, state=FSM_reg.city)
     dp.register_message_handler(load_photo, state=FSM_reg.photo, content_types=['photo'])
     dp.register_message_handler(submit, state=FSM_reg.submit)
-
 
 
 
