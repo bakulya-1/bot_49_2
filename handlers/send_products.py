@@ -10,7 +10,9 @@ async def start_send_products(message: types.Message):
     buttons_all = types.InlineKeyboardButton('Ввывести все товары', callback_data='send_all_products')
     buttons_one = types.InlineKeyboardButton('Ввывести по одному', callback_data='send_one_products')
 
-    keyboard.add(buttons_all, buttons_one)
+    button = types.InlineKeyboardButton('Далее', callback_data='button')
+
+    keyboard.add(buttons_all, buttons_one, button)
 
     await message.answer('Выберите как просмотреть товары:' , reply_markup=keyboard)
 
@@ -25,7 +27,8 @@ async def send_all_products(call: types.CallbackQuery):
                        f'Категория - {product["category"]}\n'
                        f'Артикул - {product["products_id"]}\n'
                        f'Инфо - {product["info_product"]}\n'
-                       f'Цена - {product["price"]}')
+                       f'Цена - {product["price"]}\n'
+                       f'Коллекция - {product["collection"]}\n')
 
 
             await call.message.answer_photo(photo=product["photo"], caption=caption)

@@ -78,6 +78,27 @@ def delete_product(product_id):
 
 
 
+def get_db_collection():
+    conn = sqlite3.connect('db/store.sqlite3')
+    conn.row_factory = sqlite3.Row
+    return conn
+
+def fetch_all_products():
+    conn = get_db_collection()
+    products = conn.execute("""
+    SELECT * FROM collection cl
+    INNER JOIN collection cl
+    ON cl.product_id = sd.product_id
+    """).fetchall()
+
+    conn.commit()
+    conn.close()
+    return products
+
+
+
+
+
 
 
 
